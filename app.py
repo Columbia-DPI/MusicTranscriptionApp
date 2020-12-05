@@ -10,7 +10,7 @@ from flask import (
     )
 from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = '../uploaded_samples'
+UPLOAD_FOLDER = 'uploaded_samples'
 ALLOWED_EXTENSIONS = ['mp3','wav', 'flac', 'm4a'] #TODO: verify
 #TODO: max file size config
 
