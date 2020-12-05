@@ -1,7 +1,0 @@
-certifi==2020.11.8
-click==7.1.2
-Flask==1.1.2
-itsdangerous==1.1.0
-Jinja2==2.11.2
-MarkupSafe @ file:///Users/runner/miniforge3/conda-bld/markupsafe_1602267318042/work
-Werkzeug==1.0.1
