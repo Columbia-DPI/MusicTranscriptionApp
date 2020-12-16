@@ -10,12 +10,15 @@ from flask import (
     )
 from werkzeug.utils import secure_filename
 
+from audio_visualisations import get_spectogram
+
 UPLOAD_FOLDER = 'uploaded_samples'
-ALLOWED_EXTENSIONS = ['mp3','wav', 'flac', 'm4a'] #TODO: verify
+ALLOWED_EXTENSIONS = ['mp3','wav', 'flac', 'm4a', 'oga'] #TODO: verify
 #TODO: max file size config
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY')
 
 
 def allowed_file(filename):
@@ -28,7 +31,7 @@ def uploaded_file(filename):
     return send_from_directory(app.config(['UPLOAD_FOLDER']), filename)
 
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def index():
     return render_template('index.html')
 
@@ -52,7 +55,7 @@ def upload_file():
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-        return redirect(url_for('uploaded_file', filename=filename))
+        return get_spectogram(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
 
 if __name__ == '__main__':

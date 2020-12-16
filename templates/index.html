@@ -2,12 +2,38 @@
 <html>
   <head>
     <title>File Upload</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+      function getVis() {
+        $.ajax({
+          url: '/', 
+          type: 'POST',
+          data: new FormData($("#musicUpload")[0]),
+          processData: false,
+          contentType: false
+        }).done(function(res){
+          $("#waveformHolder").html(res["waveform"]);
+          $("#spectrumHolder").html(res["spectrum"]);
+          $("#spectrogramHolder").html(res["spectogram"]);
+          $("#cqtHolder").html(res["cqt"]);
+          $("#mfccHolder").html(res["mfcc"]);
+        }).fail(function(res){
+          console.log("An error occurred, the files couldn't be sent!");
+        });
+        return false;
+      }
+    </script>
   </head>
   <body>
     <h1>File Upload</h1>
-    <form method="POST" action="" enctype="multipart/form-data">
+    <form enctype="multipart/form-data" id="musicUpload" onsubmit="return false;">
       <p><input type="file" name="file"></p>
-      <p><input type="submit" value="Submit"></p>
+      <p><input type="submit" value="Submit" onclick="getVis();"></p>
     </form>
+    <div id="waveformHolder"></div>
+    <div id="spectrumHolder"></div>
+    <div id="spectogramHolder"></div>
+    <div id="cqtHolder"></div>
+    <div id="mfccHolder"></div>
   </body>
 </html>
